@@ -15,7 +15,7 @@ namespace ConferenceTracker
 {
     public class Startup
     {
-        private readonly string _allowedOrigins = "_allwoedOrigins";
+        private readonly string _allowedOrigins = "_allowedOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -54,16 +54,16 @@ namespace ConferenceTracker
 
             app.UseHttpsRedirection();
 
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                logger.LogInformation("Environment is in development");
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-                logger.LogInformation("Environment is in development");
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseStaticFiles();
